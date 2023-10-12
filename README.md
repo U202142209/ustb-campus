@@ -51,9 +51,21 @@ vue init webpack FrontEnd
 npm install axios --save
 ```
 ## 3.本地运行项目
-1. 运行```BackEnd/main.go``来启动后端服务
-2. 运行vue
+### 3.1 下载代码
+通过git将代码下载到本地
 
+```shell
+git clone https://github.com/U202142209/ustb-campus.git
+```
+### 3.2 启动go代码
+1. 首先进入```BackEnd``文件夹
+2. 运行以下命令来下载项目所需的所有依赖：
+```shell
+go mod download
+```
+这将根据 go.mod 文件中列出的依赖项下载并安装所有必需的包。如果您还希望将这些依赖项保存到 vendor 目录中，可以运行以下命令：   
+```go mod vendor```
+### 3.3 启动前端vue
 在frontend文件夹下面使用如下命令启动
  ```shell
 npm run serve
