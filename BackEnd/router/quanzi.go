@@ -13,7 +13,6 @@ package router
 import (
 	"BackEnd/spyder"
 	"BackEnd/util"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -24,16 +23,14 @@ func GettaskbyTypeQuanziHandler(c *gin.Context) {
 	radioGroup := c.Query("radioGroup")
 	Type := c.Query("type")
 	campus := c.Query("campus")
-	// 检查参数
-	util.CheckQuanziQuery(&length, &radioGroup, &Type, &campus)
-	// 判断是否需要搜索帖子
+	util.CheckQuanziQuery(&length, &radioGroup, &Type, &campus) // 检查参数
 	search := c.Query("search")
-	fmt.Println("\n\nsearch:", search)
 	var (
 		data interface{}
 		err  error
 	)
 	if search == "" {
+		// 判断是否需要搜索帖子
 		data, err = spyder.GettaskbyTypeQuanziSpyder(length, radioGroup, Type, campus)
 	} else {
 		// 参数不为空，搜索帖子

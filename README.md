@@ -70,7 +70,90 @@ go mod download
  ```shell
 npm run serve
 ```
-## 4.部署项目
+## 4.生产环境部署项目
+### 4.1 安装go语言的开发环境
+**下载go**
+```shell
+sudo aria2c  https://golang.google.cn/dl/go1.21.3.linux-amd64.tar.gz
+```
+**解压**
+```shell
+shdo tar -C /usr/local -xzf go1.21.3.linux-amd64.tar.gz
+```
+**测试是否安装了go**
+```shell
+go version
+```
+### 4.2 运行go后端代码
+首先在```go.mod```所在的文件夹下执行下面的命令安装依赖
+```text
+go mod tidy
+go mod download
+```            
+然后**编译代码** ```go build -o ustb-campus main.go```
+这将在当前目录下生成一个名为 ustb-campus 的可执行文件
+
+**封装systemctl服务**
+```text
+sudo vim /etc/systemd/system/ustbcampus.service
+```
+```text
+[Unit]
+Description=ustbcampus Service
+After=network.target
+
+[Service]
+ExecStart=/src/ustb-campus/BackEnd/ustb-campus
+WorkingDirectory=/src/ustb-campus/BackEnd
+User=root
+Group=root
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+**启动、停止服务**
+```text
+sudo systemctl enable ustbcampus 
+sudo systemctl start  ustbcampus
+sudo systemctl disable  ustbcampus 
+```
+**nginx配置**
+```text
+server {
+    listen 80;
+    server_name ustb.campus.work.wobushidalao.top;
+
+    location / {
+        proxy_pass http://localhost:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+```
+### 4.2 部署前端vue3
+首先编译项目代码
+```shell
+npm run build
+```
+然后将编译生成的 ```dist```文件夹上传到服务器，dist文件夹里面包括```js```、```css```、```index.html```等信息，我们生产环境只需要这些就可以了，因为vue已经帮我们将所有的依赖全部集成到这里面了
+
+我的nginx配置文件如下，大家只需要改一下配置的域名和dist文件夹的绝对路径就可以了
+```text
+server {
+    listen 80;
+    server_name ustb.campus.wobushidalao.top;
+
+    location /proxy_url/ {
+        proxy_pass http://ustb.campus.work.wobushidalao.top/;
+    }
+
+    location / {
+        root /src/ustb-campus/frontend/dist;
+        try_files $uri $uri/ /index.html;
+    }
+}
+```
 ## 5.注意
 ## 6.常见问题
 全局安装Vue CLI（用于创建和管理Vue项目）
@@ -81,4 +164,12 @@ npm install -g @vue/cli
 ```
 vue create my-project
 ```
-
+## 7. 获取帮助
+```text
+@Author ;@我不是大佬
+@Email  ;2869210303@qq.com
+@Qq     ;2869210303
+@wx     ;safeseaa
+@github ;https://github.com/U202142209
+@blog   ;https://blog.csdn.net/V123456789987654
+```
