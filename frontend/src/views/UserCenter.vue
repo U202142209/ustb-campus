@@ -2,7 +2,7 @@
  * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
  * @Date: 2023-10-08 19:04:11
  * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @LastEditTime: 2023-10-12 14:11:06
+ * @LastEditTime: 2023-10-16 19:33:57
  * @FilePath: \ustb-campus\frontend\src\views\UserCenter.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -10,7 +10,7 @@
   <div>
     <p class="fontlarge">用户中心</p>
     <p> {{ this.$route.params.openid }}</p>
-    <div class="row">
+    <div class="row fontsmall">
       <span class="col-4" :class="{ 'btn btn-primary': activeIndex === 0, 'btn btn-default': activeIndex !== 0 }"
         @click="activeIndex = 0; this.refresh();">TA的发布</span>
       <span class="col-4" :class="{ 'btn btn-primary': activeIndex === 1, 'btn btn-default': activeIndex !== 1 }"
@@ -22,7 +22,7 @@
       <div v-if="activeIndex == 0">
         <ul v-if="data.length">
           <li v-for="obj in data" v-bind:key="obj.id">
-            <router-link class="colorblack" :to="'/blog/' + obj.id">
+            <router-link target="_blank" class="colorblack" :to="'/blog/' + obj.id">
               <blog-item :blog="obj"></blog-item>
             </router-link>
           </li>

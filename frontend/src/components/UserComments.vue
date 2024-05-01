@@ -16,7 +16,7 @@
             <div class="tal comment-header">
               <span class="user-name">{{ comment.userName }}</span>
               <p> 回复:
-                <router-link :to="'/user/' + comment.applyTo">
+                <router-link target="_blank" :to="'/user/' + comment.applyTo">
                   {{ comment.applyTo }}
                 </router-link>
               </p>
@@ -31,7 +31,7 @@
             </div>
             <div class="tal fl">
               <span class="fl buttonmsg">
-                <router-link v-text="'帖子:' + comment.pk" :to="'/blog/' + comment.pk"></router-link>
+                <router-link target="_blank" v-text="'帖子:' + comment.pk" :to="'/blog/' + comment.pk"></router-link>
               </span>
               <span class="fr buttonmsg" v-text="'评论pid:' + comment.pid"></span>
               <span class="fr buttonmsg" v-text="'评论id:' + comment.id"></span>
